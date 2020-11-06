@@ -1,0 +1,206 @@
+<?php
+include  __DIR__ . '/../../gms_title.php';
+ $vdomain = preg_replace('|^mail\.|i', '', getenv('HTTP_HOST'));
+  $vdomain = Horde_String::lower($vdomain);
+
+
+   $image_path = 'https://admin.eganet.go.tz/static/default/images/sliders/';
+   $api_url = 'https://admin.eganet.go.tz/api/sliders/';
+
+
+   $config = curl_init();
+
+   curl_setopt($config, CURLOPT_URL, $api_url.$vdomain);
+   curl_setopt($config, CURLOPT_RETURNTRANSFER, true);
+   curl_setopt($config,CURLOPT_SSL_VERIFYHOST,0);
+   curl_setopt($config,CURLOPT_SSL_VERIFYPEER,0);
+   $r = curl_exec($config);
+   curl_close($config);
+
+
+
+ if (! (json_decode($r))){
+
+     $config = curl_init();
+
+     curl_setopt($config, CURLOPT_URL, $api_url.'default');
+     curl_setopt($config, CURLOPT_RETURNTRANSFER, true);
+     curl_setopt($config,CURLOPT_SSL_VERIFYHOST,0);
+     curl_setopt($config,CURLOPT_SSL_VERIFYPEER,0);
+     $r_default = curl_exec($config);
+     curl_close($config);
+
+     $slider = json_decode($r_default);
+    }else{
+      $slider = json_decode($r);
+   }
+
+?>
+<html lang="en-GB"><head>
+  <title>Government Mailing System :: Log in</title>
+</head>
+
+<style>
+  span.reverse {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+  }
+</style>
+
+<div class="tr_logo">
+  <p id="tr_head">The United Republic of Tanzania</p>
+  <p id="tr_tail"><?php echo $gms_title; ?></p>
+</div>
+
+<div class="modal-form">
+  <div class="login-height">
+    <div class="login_left">
+      <div id="sliderFrame">
+        <div id="slider">   
+
+
+
+          <?php if (! empty($slider)): ?>
+
+            <?php foreach ($slider->_data as $key => $value):?>
+              <a href="<?php echo $value->url ?>" target="_blank">
+                <img src="<?php echo $image_path.$value->image ?>" alt="<?php echo $value->url ?>" />
+              </a>
+            <?php endforeach; ?>
+          <?php endif; ?>
+
+                       
+        </div>
+      </div>
+     </div>
+    <div class="login_right">
+      <?php if (!is_null($auth_label)): ?>
+       <div class="label login-app"><?php echo $auth_label ?></div>
+      <?php endif; ?>
+      <?php $notification->notify(array('listeners' => 'status')) ?>
+
+      <div class="tr_logp">
+        <p>Login to Your Account</p>
+      </div>
+      <form name="horde_login" id="horde_login" method="post" action="<?php echo $loginurl ?>" autocomplete="off">
+          <input type="hidden" name="app" id="app" value="<?php echo htmlspecialchars($vars->app) ?>" />
+          <input type="hidden" name="login_post" id="login_post" value="0" />
+          <input type="hidden" name="url" value="<?php echo htmlspecialchars($vars->url) ?>" />
+          <input type="hidden" name="anchor_string" id="anchor_string" value="<?php echo htmlspecialchars($vars->anchor_string) ?>" />
+
+          <?php foreach ($loginparams as $key => $val): ?>
+          <?php if ($val['type'] == 'hidden'): ?>
+          <input type="hidden" id="<?php echo $key ?>" name="<?php echo $key ?>" value="<?php echo isset($val['value']) ? htmlspecialchars($val['value']) : '' ?>" />
+          <?php elseif ($val['type'] == 'horde_select_view'): ?>
+
+          <div id="horde_select_view_div" style="display:none" class="tr_hsel">
+             <div id="tr_slabel"><?php echo Horde::label('horde_select_view', _("Mode")) ?></div>
+             <div>
+              <select id="horde_select_view" name="horde_select_view" class="tr_sview">
+               <option value="auto"><?php echo _("Automatic") ?></option>
+               <option value="" disabled="disabled">- - - - - - - - - -</option>
+               <!--  option value="basic" selected="selected"><?php echo _("Basic") ?></option -->
+               <option value="dynamic"><?php echo _("Computer (PC/Laptop)") ?></option>
+               <option value="smartmobile"><?php echo _("Mobile (Smartphone/Tablet)") ?></option>
+               <option value="mobile"><?php echo _("Mobile (Minimal)") ?></option>
+               <option value="mobile_nojs" selected="selected"><?php echo _("Mobile (No JavaScript)") ?></option>
+              </select>
+             </div>
+            </div>
+            <?php else: ?>
+
+            <div id="tr_usr"><?php echo Horde::label($key, $val['label']) ?></div>
+            <div id="tr_input">
+              <?php if ($val['type'] == 'text'): ?>
+              <input type="text" class = "tr_uname" autocapitalize="off" autocorrect="off" id="<?php echo $key ?>" name="<?php echo $key ?>" value="<?php echo isset($val['value']) ? htmlspecialchars($val['value']) : '' ?>" style="direction:ltr" />
+
+              <?php elseif ($val['type'] == 'password'): ?>
+              <input type="password" class="tr_upass" id="<?php echo $key ?>" name="<?php echo $key ?>" value="" style="direction:ltr" />
+              <?php if ($key == 'horde_pass'): ?>
+            </div>
+
+            <div id="horde-login-pass-capslock" style="display:none">
+             <?php echo _("Warning: Your Caps Lock key is on!") ?>
+            <?php endif; ?>
+            <?php elseif ($val['type'] == 'select'): ?>
+             <select id="<?php echo $key ?>" name="<?php echo $key ?>">
+            <?php foreach ($val['value'] as $k2 => $v2): ?>
+            <?php if (is_null($v2)): ?>
+              <option value="" disabled="disabled">- - - - - - - - - -</option>
+            <?php else: ?>
+              <option value="<?php echo $k2 ?>"<?php echo !empty($v2['selected']) ?' selected="selected"' : '' ?><?php echo !empty($v2['hidden']) ? ' style="display:none"' : '' ?>><?php echo htmlspecialchars($v2['name']) ?></option>
+            <?php endif; ?>
+            <?php endforeach ?>
+             </select>
+            <?php endif; ?>
+            </div>
+            <?php endif; ?>
+            <?php endforeach; ?>
+
+            <?php if (!$is_auth && !$prefs->isLocked('language')): ?>
+
+
+            <div style="display:none;" id="tr_slabel"><?php echo Horde::label('new_lang', _("Language")) ?></div>
+            <div style="display:none;"><select id="new_lang" name="new_lang" class="tr_sview">
+            <option value="en_GB" selected="selected">English</option>
+            <!--
+            <?php foreach ($langs as $val): ?>
+                    <option value="<?php echo $val['val'] ?>"<?php echo ($val['sel'] ? ' selected="selected"' : '') ?>><?php echo $val['name'] ?></option>
+            <?php endforeach; ?>-->
+            </select></div>
+            <?php endif; ?>
+
+            <div class="login-submit">
+             <input id="login-button" name="login_button" class="horde-default submit-button" value="<?php echo _("Log in") ?>" type="submit" />
+            </div>
+
+            <?php
+            $add_user = (!empty($conf['signup']['allow']) && $auth->hasCapability('add'));
+            $reset_passwd = !empty($conf['auth']['resetpassword']) && $auth->hasCapability('resetpassword');
+            ?>
+
+            <?php if ($add_user || $reset_passwd): ?>
+            <div class="extras">
+            <?php if ($add_user): ?>
+             <?php echo Horde::link(Horde::url('signup.php', false, array('app' => 'horde'))->add('url', $vars->url), _("Don't have an account? Sign up."), 'light') . _("Don't have an account? Sign up.") ?></a>
+            <?php endif; ?>
+
+            <?php if ($reset_passwd): ?>
+            <?php if ($add_user): ?>
+             <br />
+            <?php endif; ?>
+             <?php echo Horde::link(Horde::url('services/resetpassword.php', false, array('app' => 'horde'))->add('url', $vars->url), _("Forgot your password?"), 'light') . _("Forgot your password?") ?></a>
+            <?php endif; ?>
+            </div>
+            <?php endif; ?>
+      </form>
+    </div>
+
+
+   
+
+    <div class="info">
+      <p>For slow Internet connections Select Mobile(minimal) Mode <br>
+      <strong>Best viewed on: </strong>Firefox 3.5 and above ,IE 9 and above,chrome 18  </p>
+    </div>
+
+    <br>
+  </div>
+  <div class="footer">
+    <p>For any Technical inquiry, Please contact  your ICT Support Team at :  <span class="reverse">@troppustci</span><?php echo $vdomain ?>.</p> 
+<ul class="footer-login-copy">
+           <li>
+          Copyright &copy;<?php echo date("Y");?> , eGA. All rights reserved.  
+          </li>
+            <li>
+        GMS v2.1     
+       </li>
+  </ul> 
+</div>
+ 
+</div>
+<br>
+<?php
+try {
+    echo $registry->loadConfigFile('motd.php', 'motd', 'horde')->config['motd'];
+} catch (Horde_Exception $e) {}

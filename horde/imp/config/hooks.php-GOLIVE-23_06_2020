@@ -1,0 +1,162 @@
+<?php
+/**
+ * IMP Hooks configuration file.
+ *
+ * For more information please see the hooks.php.dist file.
+ */
+
+class IMP_Hooks
+{
+    /**
+     * PREFERENCE INIT: Set preference values on login.
+     *
+     * See horde/config/hooks.php.dist for more information.
+     */
+    public function prefs_init($pref, $value, $username, $scope_ob)
+    {
+        switch ($pref) {
+        case 'add_source':
+            // Dynamically set the add_source preference.
+            return is_null($username)
+                ? $value
+                : $GLOBALS['registry']->call('contacts/getDefaultShare');
+
+
+        case 'search_fields':
+        case 'search_sources':
+            // Dynamically set the search_fields/search_sources preferences.
+            if (!is_null($username)) {
+                $sources = $GLOBALS['registry']->call('contacts/sources');
+
+                if ($pref == 'search_fields') {
+                    $out = array();
+                    foreach (array_keys($sources) as $source) {
+                        $out[$source] = array_keys($GLOBALS['registry']->call('contacts/fields', array($source)));
+                    }
+                } else {
+                    $out = array_keys($sources);
+                }
+
+                return json_encode($out);
+            }
+
+            return $value;
+        }
+    }
+public function compose_addr(Horde_Mail_Rfc822_Address $addr)
+   {
+global $injector, $registry;
+//Check if password not changed for a long time
+ $identity = $injector->getInstance('IMP_Identity');
+$vdomain = preg_replace('|^mail\.|i', '', getenv('HTTP_HOST'));
+//$vdomain ='ega.go.tz';
+$vdomain = Horde_String::lower($vdomain);
+$search_domains = array('egatest.go.tz','ega.go.tz','egov.go.tz','eganet.go.tz','hazina.go.tz','utumishi.go.tz','wcf.go.tz','wrrb.go.tz','wma.go.tz','wdmi.ac.tz','vpo.go.tz','veta.go.tz','uwezeshaji.go.tz','uvuvi.go.tz','uongozi.go.tz','ucsaf.go.tz','uchukuzi.go.tz','tvla.go.tz','tumemadini.go.tz','tsc.go.tz','tro.go.tz','trita.ac.tz','trc.co.tz','tpsc.go.tz','tpri.go.tz','tlsb.go.tz','tirdo.or.tz','tira.go.tz','tio.go.tz','tie.go.tz','tic.go.tz','tia.ac.tz','tgfa.go.tz','tgdc.go.tz','tfs.go.tz','tfra.go.tz','temesa.go.tz','temdo.go.tz','tcaa.go.tz','tbs.go.tz','tbc.go.tz','tba.go.tz','tawiri.or.tz','tawa.go.tz','tasac.go.tz','tarura.go.tz','tari.go.tz','tantrade.go.tz','tamisemi.go.tz','taliri.go.tz','tagla.go.tz','taec.go.tz','tacaids.go.tz','stamico.co.tz','sido.go.tz','sheria.go.tz','serikali.go.tz','sbt.go.tz','psrb.go.tz','psptb.go.tz','psc.go.tz','pmo.go.tz','pbpa.go.tz','osha.go.tz','osg.go.tz','orpp.go.tz','orci.or.tz','nyaraka.go.tz','nje.go.tz','nit.ac.tz','nishati.go.tz','nimr.or.tz','nhbra.go.tz','nec.go.tz','nemc.or.tz','ndc.go.tz','nct.ac.tz','nfra.go.tz','ncc.go.tz','nbs.go.tz','nbaa.go.tz','mow.go.tz','moi.ac.tz','moe.go.tz','modans.go.tz','mnma.ac.tz','mkurabita.go.tz','mit.go.tz','brela.go.tz','mipango.go.tz','mifugo.go.tz','meteo.go.tz','mawasiliano.go.tz','maliasili.go.tz','maji.go.tz','lands.go.tz','kilimo.go.tz','kec.or.tz','kazi.go.tz','judiciary.go.tz','jkci.or.tz','jkt.go.tz','immigration.go.tz','ifm.ac.tz','ictc.go.tz','habari.go.tz','gst.go.tz','gpsa.go.tz','gov.go.tz','gcla.go.tz','gamingboard.go.tz','frf.go.tz','fiti.ac.tz','ethicssecretariat.go.tz','erb.go.tz','epza.go.tz','dit.ac.tz','ddca.go.tz','dart.go.tz','costech.or.tz','camartec.go.tz','jamii.go.tz','bunge.go.tz','aru.ac.tz','airports.go.tz','agctz.go.tz','afya.go.tz','adem.ac.tz','aqrb.go.tz');
+if (in_array($vdomain, $search_domains)) {
+
+// $from_addr = $identity->getFromAddress();
+$username=$registry->getAuth();
+$currentDate =  time(); // get current date
+$todate = floor(strtotime(date("Y-m-d H:i:s", $currentDate))/86400);
+$lastchange = $this->_params['shadowlastchange'];
+$searchbase="domainName={$vdomain},o=domains,dc=gov,dc=go,dc=tz";
+$searchfilter="(&(objectClass=mailuser)(mail=".$username."))";
+$shadowLastChange=exec('/usr/bin/ldapsearch -x -D "cn=vmail,dc=gov,dc=go,dc=tz" -h "10.1.2.100" -w "DkyjX7hGTdtjWtUV86y7EOi7qTLbn2" -b "'.$searchbase.'" "'.$searchfilter.'" | /bin/grep shadowLastChange: | /usr/bin/awk \'{print $2}\'',$output,$return_val);
+
+$diff=$todate-$shadowLastChange-90;
+if (($shadowLastChange>0) && ($todate-$shadowLastChange>91)){
+return array(
+                'msg' => "Your Password was expired for $diff days, please change the password in 'Settings=>My Account=>Password' before sending email: Send Failed",
+                'level' => 'bad'
+                );
+}
+ 
+if ($shadowLastChange==0){
+return array(
+                'msg' => "Your Password was never changed, please change the password in 'Settings=>My Account=>Password' before sending email: Send Failed",
+                'level' => 'bad'
+                );
+}
+}
+ //Validate email address format
+  $email=$addr->mailbox.'@'.$addr->host;
+ // Remove all illegal characters from email
+ $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+// Validate e-mail
+if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+return array(
+                'msg' => "Recipient E-mail Address {$email} is invalid in Standard e-mail format: Send Failed",
+                'level' => 'bad'
+                );
+}
+
+ //Validate email address format
+                $email=$addr->mailbox.'@'.$addr->host;
+                // Remove all illegal characters from email
+                $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+// Validate e-mail
+if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+return array(
+                'msg' => "Recipient E-mail Address {$email} is invalid in Standard e-mail format: Send Failed",
+                'level' => 'bad'
+                );
+}
+$_config=array(
+'hostspec'        => '10.1.2.100',
+'port'            => 389,
+'version'         => 3,
+'tls'             => false,
+'binddn'          => 'cn=vmail,dc=gov,dc=go,dc=tz',
+'bindpw'          => 'DkyjX7hGTdtjWtUV86y7EOi7qTLbn2',
+'basedn'          => "o=domains,dc=gov,dc=go,dc=tz",
+'options'         => array(),
+'user'            => array(),
+'auto_reconnect'  => false,
+'min_backoff'     => 1,
+'current_backoff' => 1,
+'x_backoff'     => 32,
+'cache'           => false,
+'cachettl'        => 3600
+);
+$param = array(
+'scope'=>'sub',
+'attributes'=>'cn'
+);
+   //validate domain name (remove ?) hii spana
+$host = str_replace('?','',$addr->host);
+$regexp ="/^(?!\-)(?:[a-zA-Z\d\-]{0,62}[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/";
+if (preg_match($regexp, $host)) {
+// if (!filter_var('http://'.$host, FILTER_VALIDATE_URL) === false) {
+//if (checkdnsrr($host, "MX")) {
+//check if domain exists in LDAP
+$ld = new Horde_Ldap($_config);
+$result =$ld->search(null, "(&(domainName={$host}))",$param);
+if($result->count()==1){
+
+$rMail = $addr->mailbox.'@'.$addr->host;
+//validate email address
+if(!filter_var($rMail, FILTER_VALIDATE_EMAIL)===false){
+//check if user exists in a given domain
+$base="domainName={$addr->host},o=domains,dc=gov,dc=go,dc=tz";
+//$user =$ld->search($base, "(&(mail={$rMail}))",$param);
+$user =$ld->search($base, "(&(objectClass=top)(accountstatus=active)(mail={$rMail}))",$param);
+if($user->count() < 1){
+return array(
+'msg' => "Recipient e-Mail {$rMail} is in-correct/disabled OR does not exist: Send failed",
+'level' => 'bad'
+);
+}
+
+}
+}
+
+   }
+   else {
+return array(
+'msg' => "Domain name {$addr->host} is either in-valid, contain un-recognized characters, OR not exist",
+'level' => 'bad'
+);
+   }
+
+ }
+}

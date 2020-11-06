@@ -1,0 +1,254 @@
+<?php
+$vdomain = preg_replace('|^mail\.|i', '', getenv('HTTP_HOST'));
+   $vdomain = Horde_String::lower($vdomain);
+?>
+<html lang="en-GB"><head>
+      <link href="https://mail.ega.go.tz/themes/default/screen.css" rel="stylesheet" type="text/css">
+      <link href="https://mail.ega.go.tz/themes/default/webkit.css" rel="stylesheet" type="text/css">  
+      <link type="image/x-icon" href="https://mail.ega.go.tz/themes/default/graphics/favicon.ico" rel="shortcut icon">   
+      <link href="slider/js-image-slider.css" rel="stylesheet" type="text/css" />
+      <script src="slider/js-image-slider.js" type="text/javascript"></script>
+      <link href="generic.css" rel="stylesheet" type="text/css" /> 
+      <title>Government Mailing System :: Log in</title>
+ </head>
+
+ <style type="text/css">
+    div.modal-form form {
+         padding: 0em; 
+    }
+    div.modal-form .notices {
+        padding-top: 0em;
+    }
+
+    div.modal-form {
+         width: 800px !important;
+         height: 390px
+    }
+
+    #tr_input input {
+        width: 245px;
+        padding: 4px 4px 10px 32px;
+    }
+
+    select.tr_sview{
+      width: 245px !important;
+    }
+
+    #tr_usr {
+      width: 89px;
+    }
+
+    #tr_slabel {
+      width: 89px;
+    }
+    .footer p{
+      text-align: center;
+      margin-top: 330px;
+      padding: 5px 15px 0px 15px;
+      height: 20px;
+      border-top: 1px solid #EBEBEB;
+    }
+
+    .login_right{
+      width:370px;
+      float:right;
+    }
+
+    .login_left{
+      width:429px;
+      float:left;
+      border-right: 1px solid #EBEBEB;
+      height: 344px;
+    }
+    .login_left p{
+      text-align: center;
+      margin-top: 5px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .login-submit{
+      float: right;
+      margin-right: 20px
+    }
+
+    .tr_logp {
+      margin-bottom: 12px;
+      background-position: 410px -1px;
+    }
+
+    .imgpad{
+      padding: 0px;
+      display: inline-block
+    }
+
+    .imgpad img {
+      border: 1px solid #008fc2;
+      border-radius: 8px;
+      width: 90px;
+      height: 90px;
+      margin-top: 30px;
+    }
+    .imgpad_all{
+      text-align: center;
+      margin-top: 0px;
+    }
+
+    div.modal-form .submit-button {
+      height: 28px;
+      width: 72px;
+      font-size: 20px;
+    }
+
+    form[action^="https://"] input[type="submit"].horde-default {
+        /* background-image: url("graphics/locked-inv.png"), url("graphics/button-default.png"); */
+        background-position: 95% center, left top;
+        background-repeat: no-repeat, repeat-x;
+        padding: 0px 0px 0px 0px;
+    }
+    .menu-icons{
+      margin-top: 5px;
+      margin-left: 15px;
+    }
+    .menu-icons img{
+       width:30px; 
+       height:30px;
+       padding-left: 5px;
+    }
+ </style>
+
+ <body class="modal-form">
+<style>
+span.reverse {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+</style>
+<div class="tr_logo">
+  <p id="tr_head">The United Republic of Tanzania</p>
+  <p id="tr_tail">Government Mailing System</p>
+</div>
+
+<div class="modal-form">
+    <div class="login_left">
+      <div class="menu-icons">
+        <a title="Frequently asked questions (FAQ)" href=""><img src="img/faq.png"></a>
+        <a title="Policies"href=""><img src="img/policies.png"></a>
+      </div>
+      <p>For slow Internet connections Select Mobile(minimal) Mode <br>
+      <strong>Best viewed on: </strong>Firefox 3.5 and above ,IE 9 and above,chrome 18  </p>
+
+      <div id="sliderFrame">
+        <div id="slider">
+            <a href="http://govsms.ega.go.tz" target="_blank">
+                <img src="slider_img/sms.png" alt="" />
+            </a>
+            <a href="http://ega.go.tz" target="_blank">
+              <img src="slider_img/hosting.png " />
+            </a>
+            <a href="http://helpdesk.ega.go.tz" target="_blank">
+              <img src="slider_img/helpdesk.png" alt="" />
+            </a>
+        </div>
+      </div>
+      <div class="imgpad_all">
+      <div class="imgpad">
+        <img  src="slider_img/ads.png" alt="">
+      </div>
+      <div class="imgpad">
+        <img  src="slider_img/ads2.png" alt="">
+      </div>
+      <div class="imgpad">
+        <img  src="slider_img/ads.png" alt="">
+      </div>
+      <div class="imgpad">
+        <img  src="slider_img/ads2.png" alt="">
+      </div>
+      
+    </div>
+    </div>
+    <div class="login_right">
+      <div class="tr_logp">
+        <p>Login to Your Account</p>
+      </div>
+      <form name="horde_login" id="horde_login" method="post" action="https://mail.ega.go.tz/login.php" autocomplete="off">
+       <!--  <ul class="notices">
+           <li>
+               <img alt="Message" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAQAAAAngNWGAAABtElEQVR4AZ3SQWvUQBQH8Bzjt2iV7e5CU1pJbXfsbgkkWbO7WYkHRXrUpYHtBxDsRcGLJ+kxUNCTpZ71kF6WINgq67JEEkEXP4CHHqL0MIe/b3DSNbanzTDwePPLm8fwlJm+eXWuVwrKw3JWHpaCud68eilb0KvJMlZRwwbtVSyjmizoF1ilr3GGBiw4cGlbFDNovNIvsKq+wusw0IWHNn/44e7YpdhAHSu8Oq26qGppHTahO3RsfsWbb283KfZgE9XSxbzXJZ/BEExAsJ+V9s1HAgpqgGHJl9A8bBAQB23c//givPe0+4qg/LEB81BCFlsybeHJa/jwR88FzHMslrCWOefJtZNrdNGz9Sl0UMvyqxP3HK5D/1KELsxEwq3QyZNEN9P/K26FEu7u5z228OD94J2ifC6Hn5o/bstbdvclPN02J12ZfPwSTFFwBbdaJ52/7zo53ZYQ6vGRwT0Bcf176eAqrcrB2u+OeEd+fITpcEDfG9hELTDckGsDHdh8b4DiYKA/ipvUQOuf1ZyMYhSGQlY9GwfRTuSl7i8v3YmC6Gwsq12gKnoIMERGO6BYnWH6/wAiLzafYunrNwAAAABJRU5ErkJggg==">
+               <div class="noticetext">You have been logged out.</div>
+           </li>
+       </ul> -->
+        <input type="hidden" name="app" id="app" value="">
+        <input type="hidden" name="login_post" id="login_post" value="0">
+        <input type="hidden" name="url" value="">
+        <input type="hidden" name="anchor_string" id="anchor_string" value="">
+
+
+        <div id="tr_usr"><label for="horde_user">Username</label></div>
+        <div id="tr_input">
+            <input type="text" class="tr_uname" autocapitalize="off" autocorrect="off" id="horde_user" name="horde_user" value="" style="direction:ltr">
+
+          </div>
+
+        <div id="tr_usr"><label for="horde_pass">Password</label></div>
+        <div id="tr_input">
+            <input type="password" class="tr_upass" id="horde_pass" name="horde_pass" value="" style="direction:ltr">
+          </div>
+
+        <div id="horde-login-pass-capslock" style="display:none">
+         Warning: Your Caps Lock key is on!</div>
+
+        <div id="horde_select_view_div" class="tr_hsel">
+         <div id="tr_slabel"><label for="horde_select_view">Mode</label></div>
+         <div>
+          <select id="horde_select_view" name="horde_select_view" class="tr_sview">
+           <option value="auto">Automatic</option>
+           <option value="" disabled="disabled">- - - - - - - - - -</option>
+           <!--  option value="basic" selected="selected">Basic</option -->
+           <option value="dynamic">Computer (PC/Laptop)</option>
+           <option value="smartmobile">Mobile (Smartphone/Tablet)</option>
+           <option value="mobile">Mobile (Minimal)</option>
+           
+          </select>
+         </div>
+        </div>
+
+
+
+        <div style="display:none;" id="tr_slabel"><label for="new_lang">Language</label></div>
+        <div style="display:none;"><select id="new_lang" name="new_lang" class="tr_sview">
+        <option value="en_GB" selected="selected">English</option>
+        <!--
+                <option value="en_GB" selected="selected">&#x202d;English (British)</option>
+        -->
+        </select></div>
+
+        <div class="login-submit">
+         <input id="login-button" name="login_button" class="horde-default submit-button" value="Login" type="submit">
+        </div>
+      </form>
+    </div>
+    <br>
+    <div class="footer">
+      <p>Visit the Government Portal <a href="http://www.tanzania.go.tz" target="_blank">www.tanzania.go.tz</a>  “A One Stop Centre for Public Information and Services”.  For any Technical inquiry, Please contact  your ICT Support Team at :  <span class="">@troppustci</span>ega.go.tz.</p> 
+    </div>
+
+</div>
+<br>
+<table width="100%"><tbody><tr><td align="center"><img src="" alt=""></td></tr></tbody></table>
+
+  <script type="text/javascript" src="https://mail.ega.go.tz/js/prototype.js?v=be5cf1c9"></script>
+  <script type="text/javascript" src="https://mail.ega.go.tz/js/horde.js?v=be5cf1c9"></script>
+  <script type="text/javascript" src="https://mail.ega.go.tz/js/hordecore.js?v=be5cf1c9"></script>
+  <script type="text/javascript" src="https://mail.ega.go.tz/js/login.js?v=be5cf1c9"></script>
+  <script type="text/javascript" src="https://mail.ega.go.tz/imp/js/login.js?v=78c7e583"></script>
+  <script type="text/javascript" src="https://mail.ega.go.tz/js/accesskeys.js?v=be5cf1c9"></script>
+  <script type="text/javascript" src="https://mail.ega.go.tz/js/growler.js?v=be5cf1c9"></script>
+  <script type="text/javascript" src="https://mail.ega.go.tz/js/scriptaculous/effects.js?v=be5cf1c9"></script>
+  <script type="text/javascript" src="https://mail.ega.go.tz/js/scriptaculous/sound.js?v=be5cf1c9"></script>  
+  <script type="text/javascript">//<![CDATA[
+    HordeCore.conf={"URI_AJAX":"\/services\/ajax.php\/horde\/","URI_DLOAD":"\/services\/download\/?app=horde","URI_LOGOUT":"\/login.php?horde_logout_token=CawzVsnaAZUZ0EreFp3z-g1&logout_reason=4","URI_SNOOZE":"https:\/\/mail.ega.go.tz\/services\/snooze.php","TOKEN":"CawzVsnaAZUZ0EreFp3z-g1","popup_height":610,"popup_width":820};HordeCore.text={"ajax_recover":"The connection to the server has been restored.","ajax_timeout":"There has been no contact with the server for several minutes. The server may be temporarily unavailable or network problems may be interrupting your session. You will not see any updates until the connection is restored.","snooze":"You can snooze it for #{time} or #{dismiss_start} dismiss #{dismiss_end} it entirely","snooze_select":{"0":"Select...","5":"5 minutes","15":"15 minutes","60":"1 hour","360":"6 hours","1440":"1 day"},"dismissed":"The alarm was dismissed."};HordeLogin.user_error="Please enter a username.";HordeLogin.pass_error="Please enter a password.";HordeLogin.pre_sel="auto";HordeLogin.server_key_error="Please choose a mail server.";HordeCore.jsfiles=["\/js\/prototype.js?v=be5cf1c9","\/js\/horde.js?v=be5cf1c9","\/js\/hordecore.js?v=be5cf1c9","\/js\/login.js?v=be5cf1c9","\/imp\/js\/login.js?v=78c7e583","\/js\/accesskeys.js?v=be5cf1c9","\/js\/growler.js?v=be5cf1c9","\/js\/scriptaculous\/effects.js?v=be5cf1c9","\/js\/scriptaculous\/sound.js?v=be5cf1c9"];
+//]]></script>
+  
+
+<div id="Growler" style="position: fixed; padding: 10px; z-index: 50000; display: none; bottom: 0px; right: 0px;"></div></body></html>

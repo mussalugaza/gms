@@ -1,0 +1,87 @@
+.icon{
+  margin-right: 5px;
+  margin-bottom: -2px;
+  display: inline-block;
+}
+
+.icon_span{
+  position: absolute;
+  padding-top: 3px;
+}
+
+#inbox {
+    width: 46px;
+    height: 22px;
+    background: url(../img/iconic.png) -18px -163px;
+
+}
+
+#draft {
+    width: 46px;
+    height: 22px;
+    background: url(../img/iconic.png) -18px -212px;
+}
+
+#sent {
+    width: 46px;
+    height: 22px;
+    background: url(../img/iconic.png) -18px -413px;
+}
+
+#junk {
+    width: 46px;
+    height: 22px;
+    background: url(../img/iconic.png) -18px -362px;
+}
+
+#trash {
+    width: 46px;
+    height: 22px;
+    background: url(../img/iconic.png) -18px -362px;
+}
+
+#delete {
+    width: 46px;
+    height: 22px;
+    background: url(../img/iconic.png) -18px 0;
+}
+#forward {
+    width: 46px;
+    height: 22px;
+    background: url(../img/iconic.png) -18px 0;
+}
+#reply {
+    width: 46px;
+    height: 22px;
+    background: url(../img/iconic.png) -18px 0;
+}
+
+#logout {
+  width: 14px;
+  height: 16px;;
+  background: url(../img/logout.png)
+}
+
+#search {
+  width: 15px;
+  height: 15px;;
+  background: url(../img/search.png)
+}
+
+#mail {
+  width: 24px;
+  height: 15px;;
+  background: url(../img/mail.png)
+}
+
+#arrow-right {
+  width: 8px;
+  height: 13px;;
+  background: url(../img/arrow-right.png)
+}
+
+#arrow-left {
+  width: 8px;
+  height: 13px;;
+  background: url(../img/arrow-left.png)
+}

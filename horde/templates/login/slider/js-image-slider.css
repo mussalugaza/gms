@@ -1,0 +1,196 @@
+/* http://www.menucool.com */
+
+#sliderFrame, #sliderFrame div {
+    box-sizing: content-box;
+}
+#sliderFrame 
+{
+    width:390px;
+    margin:0 auto; /*center-aligned*/
+}
+
+#slider, #slider .sliderInner {
+    width:378px;height:140px;/* Must be the same size as the slider images */
+    border-radius:3px;
+}
+
+#slider {
+    background-color:white;
+    position:relative;
+    margin:0 auto; /*center-aligned*/
+    transform: translate3d(0,0,0);
+    box-shadow: 0px 1px 5px #999999;
+}
+
+/* the link style (if an image is wrapped by a link) */
+#slider a.imgLink, #slider .video {
+    z-index:2;
+    cursor:pointer;
+    position:absolute;
+    top:0px;left:0px;border:0;padding:0;margin:0;
+    width:100%;height:100%;
+}
+#slider .video {
+    background:transparent url(video.png) no-repeat 50% 50%;
+}
+
+/* Caption styles */
+#slider .mc-caption {
+    position:absolute;
+    width:100%;
+    height:auto;
+    padding:10px 0;/* 10px will increase the height.*/
+    left:0px;
+    bottom:0px;top:auto;
+    overflow:hidden;
+    font: bold 14px/20px Arial;
+    color:#EEE;
+    text-align:center;
+    background:rgba(0,0,0,0.3);
+}
+#slider .mc-caption a {
+    color:#FB0;
+}
+#slider .mc-caption a:hover {
+    color:#DA0;
+}
+
+
+/* ------ built-in navigation bullets wrapper ------*/
+#slider .navBulletsWrapper  {
+    top:150px;
+    text-align:center;
+    background:none;
+    position:relative;
+    z-index:3;
+}
+
+/* each bullet */
+#slider .navBulletsWrapper div 
+{
+    width:11px; height:11px;
+    font-size:0;color:White;/*hide the index number in the bullet element*/
+    background:transparent url(bullet.png) no-repeat 0 0;
+    display:inline-block; *display:inline; zoom:1;
+    overflow:hidden;cursor:pointer;
+    margin:0 6px;/* set distance between each bullet*/
+}
+
+#slider .navBulletsWrapper .active {background-position:0 -11px;}
+
+
+/* --------- Others ------- */
+
+#slider img, #slider>b, #slider a>b {
+    position:absolute; border:none; display:none;
+}
+
+#slider .sliderInner {
+    overflow:hidden;
+    position:absolute; top:0; left:0;
+}
+
+#slider>a, #slider video, #slider audio {display:none;}
+#slider div {-webkit-transform: translate3d(0,0,0);transform: translate3d(0,0,0);}
+    div.modal-form form {
+         padding: 0em; 
+    }
+    div.modal-form .notices {
+        padding-top: 0em;
+    }
+
+    div.modal-form {
+         width: 800px !important;
+         height: 390px
+    }
+
+    #tr_input input {
+        width: 185px;
+        padding: 4px 4px 10px 32px;
+    }
+
+    select.tr_sview{
+      width: 224px !important;
+    }
+
+    #tr_usr {
+      width: 89px;
+    }
+
+    #tr_slabel {
+      width: 89px;
+    }
+    .footer p{
+      text-align: center;
+      margin-top: 330px;
+      padding: 5px 15px 0px 15px;
+      height: 20px;
+      border-top: 1px solid #EBEBEB;
+    }
+
+    .login_right{
+      width:370px;
+      float:right;
+    }
+
+    .login_left{
+      width:429px;
+      float:left;
+      border-right: 1px solid #EBEBEB;
+      height: 344px;
+    }
+    .login_left p{
+      text-align: center;
+      margin-top: 5px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .login-submit{
+      float: right;
+      margin-right: 45px
+    }
+
+    .tr_logp {
+      margin-bottom: 12px;
+      background-position: 410px -1px;
+    }
+
+    .imgpad{
+      padding: 0px;
+      display: inline-block
+    }
+
+    .imgpad img {
+      border: 1px solid #008fc2;
+      border-radius: 8px;
+      width: 90px;
+      height: 90px;
+      margin-top: 30px;
+    }
+    .imgpad_all{
+      text-align: center;
+      margin-top: 0px;
+    }
+
+    div.modal-form .submit-button {
+      height: 28px;
+      width: 72px;
+      font-size: 20px;
+    }
+
+    form[action^="https://"] input[type="submit"].horde-default {
+        /* background-image: url("graphics/locked-inv.png"), url("graphics/button-default.png"); */
+        background-position: 95% center, left top;
+        background-repeat: no-repeat, repeat-x;
+        padding: 0px 0px 0px 0px;
+    }
+    .menu-icons{
+      margin-top: 5px;
+      margin-left: 15px;
+    }
+    .menu-icons img{
+       width:30px; 
+       height:30px;
+       padding-left: 5px;
+    }
